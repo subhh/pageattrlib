@@ -1,6 +1,6 @@
-# XSLT Library to work with PAGE XML custom attributes 
+# Work with PAGE XML custom attributes
 
-Copyright (c) by State and University Library Hamburg and released under the terms of the MIT license.
+Copyright (c) 2021–2022 by State and University Library Hamburg and released under the terms of the MIT license.
 
 ## Usage
 
