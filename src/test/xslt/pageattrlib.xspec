@@ -1,0 +1,41 @@
+<xspec:description stylesheet="../../main/xslt/pageattrlib.xsl" xslt-version="3.0"
+                   xmlns:fn="https://github.com/subhh/pageattrlib"
+                   xmlns:map="http://www.w3.org/2005/xpath-functions/map"
+                   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                   xmlns:xspec="http://www.jenitennison.com/xslt/xspec">
+
+  <xspec:scenario label="Parsing a single custom property">
+    <xspec:scenario label="with boolean values">
+      <xspec:call function="fn:properties-to-map">
+        <xspec:param name="properties" as="xs:string">prop { one: tRuE; two: fAlSe; }</xspec:param>
+      </xspec:call>
+      <xspec:expect label="returns a boolean true value" test="$xspec:result?prop?one eq true()"/>
+      <xspec:expect label="returns a boolean false value" test="$xspec:result?prop?two eq false()"/>
+    </xspec:scenario>
+    <xspec:scenario label="with integer values">
+      <xspec:call function="fn:properties-to-map">
+        <xspec:param name="properties" as="xs:string">prop { one: -10; }</xspec:param>
+      </xspec:call>
+      <xspec:expect label="returns a integer value" test="$xspec:result?prop?one eq xs:int(-10)"/>
+    </xspec:scenario>
+    <xspec:scenario label="with decimal values">
+      <xspec:call function="fn:properties-to-map">
+        <xspec:param name="properties" as="xs:string">prop { one: -0.1; }</xspec:param>
+      </xspec:call>
+      <xspec:expect label="returns a decimal value" test="$xspec:result?prop?one eq xs:decimal(-0.1)"/>
+    </xspec:scenario>
+    <xspec:scenario label="with string values">
+      <xspec:call function="fn:properties-to-map">
+        <xspec:param name="properties" as="xs:string">prop { one: "some string" }</xspec:param>
+      </xspec:call>
+      <xspec:expect label="returns a string value" test="$xspec:result?prop?one eq xs:string('&quot;some string&quot;')"/>
+    </xspec:scenario>
+    <xspec:scenario label="with an invalid value" catch="yes">
+      <xspec:call function="fn:properties-to-map">
+        <xspec:param name="properties" as="xs:string">prop { one }</xspec:param>
+      </xspec:call>
+      <xspec:expect label="signals an error" test="map:contains($xspec:result, 'err')"/>
+    </xspec:scenario>
+  </xspec:scenario>
+
+</xspec:description>
